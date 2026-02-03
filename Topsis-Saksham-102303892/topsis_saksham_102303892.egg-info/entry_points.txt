@@ -1,0 +1,2 @@
+[console_scripts]
+topsis = topsis_saksham_102303892.topsis:topsis

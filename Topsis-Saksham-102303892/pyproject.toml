@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topsis-saksham-102303892"
+version = "1.0.0"
+description = "Python package implementing TOPSIS for MCDM problems"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "MIT"}
+authors = [
+    {name = "Saksham Verma"}
+]
+keywords = ["TOPSIS", "MCDM", "Multi-Criteria Decision Making", "Decision Analysis"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "pandas",
+    "numpy"
+]
+
+[project.scripts]
+topsis = "topsis_saksham_102303892.topsis:topsis"
+
+[project.urls]
+Homepage = "https://pypi.org/project/topsis-saksham-102303892/"
