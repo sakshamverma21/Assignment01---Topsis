@@ -1,299 +1,123 @@
-# Assignment 01 - TOPSIS Implementation and Deployment
+# Assignment 01 - TOPSIS Implementation
 
-This assignment implements TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) for Multi-Criteria Decision Making (MCDM) problems in three different formats: command-line tool, Python package, and web service.
-
----
-
-## 📋 Assignment Overview
-
-### Part I: Command-Line Implementation
-A Python script that performs TOPSIS analysis via command line with comprehensive input validation and error handling.
-
-### Part II: PyPI Package
-A published Python package available on PyPI for easy installation and use across projects.
-
-**Package Link:** [topsis-saksham-102303892](https://pypi.org/project/topsis-saksham-102303892/)
-
-### Part III: Web Service
-A Flask-based web application that accepts file uploads and sends analysis results via email.
+**Submitted by:** Saksham Verma | **Roll No:** 102303892 | **Course:** UCS633 - Predictive Analytics
 
 ---
 
-## 1. TOPSIS Methodology
+## 1. Methodology
 
-TOPSIS is a multi-criteria decision analysis method that identifies the alternative closest to the ideal solution and farthest from the negative-ideal solution.
+TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) is a multi-criteria decision-making method that ranks alternatives based on their proximity to the ideal solution.
 
-### Algorithm Steps:
+**Algorithm Steps:**
+1. **Normalize** the decision matrix using vector normalization
+2. **Apply weights** to normalized values
+3. **Identify ideal best** (V⁺) and **ideal worst** (V⁻) solutions
+4. **Calculate Euclidean distances** from ideal solutions
+5. **Compute TOPSIS score** and rank alternatives
 
-1. **Normalization**: Convert the decision matrix to normalized form using vector normalization
-   ```
-   r_ij = x_ij / √(Σ x_ij²)
-   ```
-
-2. **Weighted Normalization**: Multiply normalized values by their respective weights
-   ```
-   v_ij = w_j × r_ij
-   ```
-
-3. **Ideal Solutions**: Determine ideal best (V⁺) and ideal worst (V⁻) values
-   - For benefit criteria (+): V⁺ = max, V⁻ = min
-   - For cost criteria (-): V⁺ = min, V⁻ = max
-
-4. **Distance Calculation**: Calculate Euclidean distances from ideal solutions
-   ```
-   S⁺ = √(Σ(v_ij - v_j⁺)²)
-   S⁻ = √(Σ(v_ij - v_j⁻)²)
-   ```
-
-5. **TOPSIS Score**: Calculate performance score and rank alternatives
-   ```
-   P = S⁻ / (S⁺ + S⁻)
-   ```
+The alternative closest to the ideal solution and farthest from the negative-ideal solution is ranked highest.
 
 ---
 
-## 2. Implementation Details
+## 2. Description
+
+This assignment implements TOPSIS in three formats:
 
 ### Part I: Command-Line Tool
-
-**File:** `topsis.py`
-
-**Usage:**
-```bash
-python topsis.py <InputFile> <Weights> <Impacts> <ResultFile>
-```
-
-**Example:**
-```bash
-python topsis.py data.csv "1,1,1,1,1" "+,+,+,+,-" output-result.csv
-```
-
-**Validation Checks:**
-- ✅ Correct number of parameters
-- ✅ File existence verification
-- ✅ Minimum 3 columns requirement
-- ✅ Numeric value validation (columns 2 onwards)
-- ✅ Equal count of weights, impacts, and criteria
-- ✅ Impact symbols validation (+ or -)
-- ✅ Comma-separated format enforcement
-
----
-
-### Part II: PyPI Package
-
-**Package Name:** `topsis-saksham-102303892`
-
-**Installation:**
-```bash
-pip install topsis-saksham-102303892
-```
-
-**Usage:**
-```bash
-topsis data.csv "1,1,1,1,1" "+,+,+,+,-"
-```
-
-**Help Command:**
-```bash
-topsis /h
-```
-
-**Package Structure:**
-```
-Topsis-Saksham-102303892/
-├── topsis_saksham_102303892/
-│   ├── __init__.py
-│   └── topsis.py
-├── setup.py
-├── pyproject.toml
-├── README.md
-├── LICENSE
-└── MANIFEST.in
-```
-
-**Features:**
-- Command-line interface via entry points
-- Automatic output file generation
-- Comprehensive error messages
-- Complete documentation
-
----
-
-### Part III: Web Service
-
-**Technology Stack:** Flask, Python, SMTP
-
-**Features:**
-- 📁 File upload interface
-- ⚖️ Weights and impacts input
-- 📧 Email result delivery
-- ✅ Input validation
-- 🎨 Clean, responsive UI
-
-**Setup:**
-```bash
-cd topsis-web-service
-pip install -r requirements.txt
-python app.py
-```
-
-**Access:** http://127.0.0.1:5000
-
-**Validation Rules:**
-- Number of weights = Number of impacts
-- Impacts must be + or -
-- Valid email format required
-- CSV must contain numeric values
-
----
-
-## 3. Input/Output Format
-
-### Input CSV Structure
-```csv
-Name,Criterion1,Criterion2,Criterion3,Criterion4
-Item1,10,20,30,40
-Item2,15,25,35,45
-Item3,12,22,32,42
-```
-
-**Requirements:**
-- First column: Identifier (any type)
-- Remaining columns: Numeric values only
-- Minimum 3 columns total
-
-### Output CSV Structure
-```csv
-Name,Criterion1,Criterion2,Criterion3,Criterion4,Topsis Score,Rank
-Item1,10,20,30,40,0.534277,3
-Item2,15,25,35,45,0.691632,1
-Item3,12,22,32,42,0.401046,2
-```
-
-**Added Columns:**
-- **Topsis Score**: Performance score (0 to 1)
-- **Rank**: Ranking based on score (1 = best)
-
----
-
-## 4. Sample Execution
-
-### Command-Line Example
-
-**Input Command:**
+Python script with comprehensive validation and error handling.
 ```bash
 python topsis.py data.csv "1,1,1,1,1" "+,+,+,+,-" result.csv
 ```
 
-**Sample Input (data.csv):**
+### Part II: PyPI Package
+Published Python package for easy installation and reuse.
+```bash
+pip install topsis-saksham-102303892
+topsis data.csv "1,1,1,1,1" "+,+,+,+,-"
+```
+
+### Part III: Web Service
+Flask-based web application with:
+- File upload interface
+- Weights and impacts input
+- Email result delivery
+- Input validation (weights count = impacts count, + or - symbols only)
+
+---
+
+## 3. Input / Output
+
+### Input CSV Format
 ```csv
 Fund Name,P1,P2,P3,P4,P5
 M1,0.84,0.71,5.7,62.9,17.54
 M2,0.89,0.79,5.2,54.5,15.35
 M3,0.93,0.86,5.7,52.1,14.9
 ```
+- First column: Identifier
+- Remaining columns: Numeric criteria values
+- Minimum 3 columns required
 
-**Sample Output (result.csv):**
+### Output CSV Format
 ```csv
 Fund Name,P1,P2,P3,P4,P5,Topsis Score,Rank
-M1,0.84,0.71,5.7,62.9,17.54,0.681556,3
-M2,0.89,0.79,5.2,54.5,15.35,0.748839,2
-M3,0.93,0.86,5.7,52.1,14.9,0.423169,5
+M1,0.84,0.71,5.7,62.9,17.54,0.6816,3
+M2,0.89,0.79,5.2,54.5,15.35,0.7488,2
+M3,0.93,0.86,5.7,52.1,14.9,0.4232,5
 ```
+- Adds **Topsis Score** (0-1 scale)
+- Adds **Rank** (1 = best alternative)
 
 ---
 
-## 5. Error Handling
+## 4. Live Links
 
-### Common Errors and Messages
+**PyPI Package:** https://pypi.org/project/topsis-saksham-102303892/
 
-| Error Type | Message |
-|-----------|---------|
-| Missing parameters | "Usage: topsis <InputFile> <Weights> <Impacts> <ResultFile>" |
-| File not found | "Error: File not found" |
-| Insufficient columns | "Error: File must contain at least 3 columns" |
-| Non-numeric values | "Error: Non-numeric values found" |
-| Count mismatch | "Error: Number of weights (X) does not match number of criteria (Y)" |
-| Invalid impacts | "Error: Impacts must be + or -" |
-| Invalid email | "Invalid email format" |
+**GitHub Repository:** https://github.com/sakshamverma21/Assignment01---Topsis
+
+**Web Service:** (Local deployment - `python app.py` in topsis-web-service/)
 
 ---
 
-## 6. Repository Structure
+## 5. Screenshot of the Interface
+
+### Web Service Interface
+![TOPSIS Web Interface](screenshot.png)
+
+**Features:**
+- Clean and intuitive form design
+- File upload for CSV input
+- Text inputs for weights and impacts
+- Email field for result delivery
+- Orange submit button with validation
+- Success/error message display
+
+---
+
+## Repository Structure
+
+---
+
+## Repository Structure
 
 ```
 Assignment01---Topsis/
-├── README.md                          # This file
-├── topsis.py                          # Part I: Command-line script
-├── data.csv                           # Sample input data
-├── output-result.csv                  # Sample output
-├── Topsis-Saksham-102303892/         # Part II: PyPI package
-│   ├── topsis_saksham_102303892/
-│   │   ├── __init__.py
-│   │   └── topsis.py
-│   ├── setup.py
-│   ├── pyproject.toml
-│   ├── README.md
-│   ├── LICENSE
-│   └── MANIFEST.in
-└── topsis-web-service/                # Part III: Web application
+├── README.md
+├── topsis.py                    # Part I: CLI script
+├── data.csv                     # Sample input
+├── output-result.csv            # Sample output
+├── Topsis-Saksham-102303892/   # Part II: PyPI package
+└── topsis-web-service/          # Part III: Web application
     ├── app.py
-    ├── templates/
-    │   └── index.html
+    ├── templates/index.html
     ├── requirements.txt
-    ├── .env.example
-    ├── .gitignore
-    └── README.md
+    └── .env.example
 ```
 
 ---
 
-## 7. Installation & Usage
-
-### Part I: Direct Script
-```bash
-python topsis.py data.csv "1,1,1,1,1" "+,+,+,+,-" result.csv
-```
-
-### Part II: PyPI Package
-```bash
-pip install topsis-saksham-102303892
-topsis data.csv "1,1,1,1,1" "+,+,+,+,-"
-```
-
-### Part III: Web Service
-```bash
-cd topsis-web-service
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env with your email credentials
-python app.py
-```
-
----
-
-## 8. Key Features
-
-### Comprehensive Validation
-- Parameter count verification
-- File existence checks
-- Data type validation
-- Dimensional consistency checks
-- Format validation (email, impacts)
-
-### User-Friendly Output
-- Clear error messages
-- Help documentation
-- Result visualization
-- Email delivery option
-
-### Production-Ready
-- Environment variable configuration
-- Secure credential handling
-- .gitignore for sensitive data
-- Complete documentation
-
----
+**License:** MIT
 
 ## 9. Testing Results
 
